@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PayFlow Dashboard</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f5f7fb;
+      color: #172033;
+    }
+
+    .app {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 240px;
+      background: #101828;
+      color: white;
+      padding: 28px 18px;
+      position: fixed;
+      height: 100vh;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 45px;
+      padding-left: 10px;
+    }
+
+    .logo span {
+      color: #5b8cff;
+    }
+
+    .nav a {
+      display: block;
+      color: #aab4c5;
+      text-decoration: none;
+      padding: 14px 12px;
+      border-radius: 10px;
+      margin-bottom: 6px;
+    }
+
+    .nav a:hover,
+    .nav .active {
+      background: #1d2939;
+      color: white;
+    }
+
+    /* Main */
+    .main {
+      margin-left: 240px;
+      width: calc(100% - 240px);
+      padding: 30px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .topbar h1 {
+      font-size: 28px;
+    }
+
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: #5b8cff;
+      color: white;
+      display: grid;
+      place-items: center;
+      font-weight: bold;
+    }
+
+    /* Balance */
+    .balance-card {
+      background: linear-gradient(135deg, #315bea, #7048e8);
+      color: white;
+      padding: 30px;
+      border-radius: 20px;
+      max-width: 650px;
+      box-shadow: 0 15px 35px rgba(55, 75, 200, .2);
+    }
+
+    .balance-label {
+      opacity: .8;
+      margin-bottom: 10px;
+    }
+
+    .balance {
+      font-size: 38px;
+      font-weight: 800;
+      margin-bottom: 25px;
+    }
+
+    .balance-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    button {
+      border: none;
+      cursor: pointer;
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-weight: 600;
+    }
+
+    .white-btn {
+      background: white;
+      color: #315bea;
+    }
+
+    .transparent-btn {
+      background: rgba(255,255,255,.15);
+      color: white;
+    }
+
+    /* Cards */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin: 25px 0;
+    }
+
+    .stat {
+      background: white;
+      padding: 22px;
+      border-radius: 16px;
+      border: 1px solid #eaecf0;
+    }
+
+    .stat p {
+      color: #667085;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .stat h2 {
+      font-size: 23px;
+    }
+
+    /* Transactions */
+    .transactions {
+      background: white;
+      border-radius: 18px;
+      padding: 24px;
+      border: 1px solid #eaecf0;
+    }
+
+    .transactions-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .transaction {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .transaction:last-child {
+      border-bottom: none;
+    }
+
+    .person {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .transaction-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: #eef2ff;
+      display: grid;
+      place-items: center;
+    }
+
+    .name {
+      font-weight: 600;
+    }
+
+    .date {
+      color: #98a2b3;
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    .amount {
+      font-weight: 700;
+    }
+
+    .positive {
+      color: #12b76a;
+    }
+
+    .negative {
+      color: #f04438;
+    }
+
+    /* Mobile */
+    @media (max-width: 750px) {
+      .sidebar {
+        width: 70px;
+        padding: 20px 10px;
+      }
+
+      .logo {
+        font-size: 18px;
+        padding: 0;
+        text-align: center;
+      }
+
+      .logo span,
+      .nav a span {
+        display: none;
+      }
+
+      .nav a {
+        text-align: center;
+        font-size: 20px;
+      }
+
+      .main {
+        margin-left: 70px;
+        width: calc(100% - 70px);
+        padding: 20px;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .balance {
+        font-size: 30px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <aside class="sidebar">
+    <div class="logo">Pay<span>Flow</span></div>
+
+    <nav class="nav">
+      <a href="#" class="active">⌂ <span>Dashboard</span></a>
+      <a href="#">↗ <span>Send Money</span></a>
+      <a href="#">↙ <span>Receive</span></a>
+      <a href="#">↔ <span>Transactions</span></a>
+      <a href="#">⚙ <span>Settings</span></a>
+    </nav>
+  </aside>
+
+  <main class="main">
+
+    <header class="topbar">
+      <div>
+        <h1>Welcome back</h1>
+        <p style="color:#667085;margin-top:5px;">
+          Here's your account overview.
+        </p>
+      </div>
+
+      <div class="profile">
+        <div>
+          <strong>Alex Morgan</strong>
+        </div>
+        <div class="avatar">AM</div>
+      </div>
+    </header>
+
+    <section class="balance-card">
+      <div class="balance-label">Available Balance</div>
+      <div class="balance">$12,480.50</div>
+
+      <div class="balance-actions">
+        <button class="white-btn" onclick="sendMoney()">
+          Send Money
+        </button>
+
+        <button class="transparent-btn" onclick="receiveMoney()">
+          Receive
+        </button>
+      </div>
+    </section>
+
+    <section class="stats">
+
+      <div class="stat">
+        <p>Total Received</p>
+        <h2>$18,240.00</h2>
+      </div>
+
+      <div class="stat">
+        <p>Total Sent</p>
+        <h2>$5,759.50</h2>
+      </div>
+
+      <div class="stat">
+        <p>This Month</p>
+        <h2>$2,840.20</h2>
+      </div>
+
+    </section>
+
+    <section class="transactions">
+
+      <div class="transactions-header">
+        <h2>Recent Transactions</h2>
+        <button onclick="showAll()">View all</button>
+      </div>
+
+      <div class="transaction">
+        <div class="person">
+          <div class="transaction-icon">↙</div>
+          <div>
+            <div class="name">Michael Johnson</div>
+            <div class="date">Today · 10:42 AM</div>
+          </div>
+        </div>
+
+        <div class="amount positive">+$850.00</div>
+      </div>
+
+      <div class="transaction">
+        <div class="person">
+          <div class="transaction-icon">↗</div>
+          <div>
+            <div class="name">Online Store</div>
+            <div class="date">Yesterday · 4:20 PM</div>
+          </div>
+        </div>
+
+        <div class="amount negative">-$120.50</div>
+      </div>
+
+      <div class="transaction">
+        <div class="person">
+          <div class="transaction-icon">↙</div>
+          <div>
+            <div class="name">Sarah Williams</div>
+            <div class="date">Sep 12 · 1:15 PM</div>
+          </div>
+        </div>
+
+        <div class="amount positive">+$430.00</div>
+      </div>
+
+      <div class="transaction">
+        <div class="person">
+          <div class="transaction-icon">↗</div>
+          <div>
+            <div class="name">Subscription</div>
+            <div class="date">Sep 10 · 9:00 AM</div>
+          </div>
+        </div>
+
+        <div class="amount negative">-$25.00</div>
+      </div>
+
+    </section>
+
+  </main>
+
+</div>
+
+<script>
+  function sendMoney() {
+    alert("Demo: Send Money feature");
+  }
+
+  function receiveMoney() {
+    alert("Demo: Receive Money feature");
+  }
+
+  function showAll() {
+    alert("Demo: Transaction history");
+  }
+</script>
+
+</body>
+</html>
