@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PayFlow Dashboard</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f5f7fb;
+      color: #172033;
+    }
+
+    .app {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      width: 240px;
+      background: #101828;
+      color: white;
+      padding: 28px 18px;
+      position: fixed;
+      height: 100vh;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 45px;
+      padding-left: 10px;
+    }
+
+    .logo span {
+      color: #5b8cff;
+    }
+
+    .nav a {
+      display: block;
+      color: #aab4c5;
+      text-decoration: none;
+      padding: 14px 12px;
+      border-radius: 10px;
+      margin-bottom: 6px;
+    }
+
+    .nav a:hover,
+    .nav .active {
+      background: #1d2939;
+      color: white;
+    }
+
+    .main {
+      margin-left: 240px;
+      width: calc(100% - 240px);
+      padding: 30px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .topbar h1 {
+      font-size: 28px;
+    }
+
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: #5b8cff;
+      color: white;
+      display: grid;
+      place-items: center;
+      font-weight: bold;
+    }
+
+    .balance-card {
+      background: linear-gradient(135deg, #315bea, #7048e8);
+      color: white;
+      padding: 30px;
+      border-radius: 20px;
+      max-width: 650px;
+      box-shadow: 0 15px 35px rgba(55, 75, 200, .2);
+    }
+
+    .balance-label {
+      opacity: .8;
+      margin-bottom: 10px;
+    }
+
+    .balance {
+      font-size: 38px;
+      font-weight: 800;
+      margin-bottom: 25px;
+    }
+
+    .balance-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    button {
+      border: none;
+      cursor: pointer;
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-weight: 600;
